@@ -10,6 +10,8 @@ type InterviewSessionProps = {
   jobDescription: string;
   resume: string;
   onConfidenceChange: (value: number) => void;
+  onTranscript?: (payload: { speaker: "ai" | "user"; message: string }) => void;
+  onFeedback?: (payload: { impact: number; reason: string; score: number }) => void;
   onEnd: () => void;
 };
 
@@ -33,6 +35,8 @@ export default function InterviewSession({
   jobDescription,
   resume,
   onConfidenceChange,
+  onTranscript,
+  onFeedback,
   onEnd,
 }: InterviewSessionProps) {
   const { status, isSpeaking, error } = useInterviewSession({
@@ -42,6 +46,8 @@ export default function InterviewSession({
     resume,
     confidence,
     onConfidenceChange,
+    onTranscript,
+    onFeedback,
   });
 
   return (

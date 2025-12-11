@@ -11,6 +11,8 @@ type UseInterviewSessionArgs = {
   resume: string;
   confidence: number;
   onConfidenceChange: (next: number) => void;
+  onTranscript?: (payload: { speaker: "ai" | "user"; message: string }) => void;
+  onFeedback?: (payload: { impact: number; reason: string; score: number }) => void;
 };
 
 type UseInterviewSessionResult = {
@@ -26,6 +28,8 @@ export const useInterviewSession = ({
   resume,
   confidence,
   onConfidenceChange,
+  onTranscript,
+  onFeedback,
 }: UseInterviewSessionArgs): UseInterviewSessionResult => {
   const [error, setError] = useState<string | null>(null);
   const agentId = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ?? "";
@@ -61,6 +65,7 @@ export const useInterviewSession = ({
         const next = clampConfidence(confidenceRef.current + impact);
         confidenceRef.current = next;
         onConfidenceChange(next);
+        onFeedback?.({ impact, reason, score: next });
         log("rateAnswer", { impact, reason, next });
         toast(`${reason}`, {
           description: `Impact: ${impact > 0 ? "+" : ""}${impact}`,
@@ -74,6 +79,8 @@ export const useInterviewSession = ({
     onConnect: ({ conversationId }: { conversationId: string }) =>
       log("connected", { conversationId }),
     onDisconnect: (details: unknown) => log("disconnected", details),
+    onMessage: ({ message, source }: { message: string; source: "ai" | "user" }) =>
+      onTranscript?.({ speaker: source, message }),
     onUnhandledClientToolCall: (call: unknown) => log("unhandled tool call", call),
     onError: (message: string) => setError(message),
   });

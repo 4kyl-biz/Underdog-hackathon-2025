@@ -7,6 +7,7 @@ import { defaultJobDescription, defaultResume } from "@/lib/defaults";
 import InterviewSession from "./components/InterviewSession";
 import personasData from "@/docs/personas.json";
 import { Toaster } from "sonner";
+import SummaryView from "./components/SummaryView";
 
 const personas: Persona[] = personasData as Persona[];
 
@@ -18,13 +19,44 @@ export default function HomePage() {
   const [resume, setResume] = useState<string>(defaultResume);
   const [inSession, setInSession] = useState<boolean>(false);
   const [confidence, setConfidence] = useState<number>(70);
+  const [transcript, setTranscript] = useState<
+    { speaker: "ai" | "user"; message: string }[]
+  >([]);
+  const [feedback, setFeedback] = useState<
+    { impact: number; reason: string; score: number }[]
+  >([]);
+  const [summary, setSummary] = useState<{
+    transcript: { speaker: "ai" | "user"; message: string }[];
+    feedback: { impact: number; reason: string; score: number }[];
+    finalScore: number;
+  } | null>(null);
 
   const handleStart = () => {
     setConfidence(70);
+    setTranscript([]);
+    setFeedback([]);
+    setSummary(null);
     setInSession(true);
   };
 
   const handleEnd = () => {
+    setInSession(false);
+    setSummary({
+      transcript,
+      feedback,
+      finalScore: confidence,
+    });
+  };
+
+  const handleRestart = () => {
+    setSelectedPersona(defaultPersona);
+    setHarshness(defaultPersona.defaultHarshness);
+    setJobDescription(defaultJobDescription);
+    setResume(defaultResume);
+    setConfidence(70);
+    setTranscript([]);
+    setFeedback([]);
+    setSummary(null);
     setInSession(false);
   };
 
@@ -59,21 +91,32 @@ export default function HomePage() {
       <section className="grid gap-4 rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-xl shadow-slate-200/50 backdrop-blur">
         <SignedIn>
           {!inSession ? (
-            <InterviewSetup
-              personas={personas}
-              selectedPersona={selectedPersona}
-              harshness={harshness}
-              jobDescription={jobDescription}
-              resume={resume}
-              onSelectPersona={(persona) => {
-                setSelectedPersona(persona);
-                setHarshness(persona.defaultHarshness);
-              }}
-              onHarshnessChange={setHarshness}
-              onJobDescriptionChange={setJobDescription}
-              onResumeChange={setResume}
-              onStart={handleStart}
-            />
+            summary ? (
+              <SummaryView
+                personaName={selectedPersona.name}
+                harshness={harshness}
+                finalScore={summary.finalScore}
+                transcript={summary.transcript}
+                feedback={summary.feedback}
+                onRestart={handleRestart}
+              />
+            ) : (
+              <InterviewSetup
+                personas={personas}
+                selectedPersona={selectedPersona}
+                harshness={harshness}
+                jobDescription={jobDescription}
+                resume={resume}
+                onSelectPersona={(persona) => {
+                  setSelectedPersona(persona);
+                  setHarshness(persona.defaultHarshness);
+                }}
+                onHarshnessChange={setHarshness}
+                onJobDescriptionChange={setJobDescription}
+                onResumeChange={setResume}
+                onStart={handleStart}
+              />
+            )
           ) : (
             <InterviewSession
               persona={selectedPersona}
@@ -82,6 +125,8 @@ export default function HomePage() {
               jobDescription={jobDescription}
               resume={resume}
               onConfidenceChange={setConfidence}
+              onTranscript={(entry) => setTranscript((prev) => [...prev, entry])}
+              onFeedback={(item) => setFeedback((prev) => [...prev, item])}
               onEnd={handleEnd}
             />
           )}
