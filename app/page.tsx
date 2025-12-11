@@ -5,36 +5,9 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import InterviewSetup, { type Persona } from "./components/InterviewSetup";
 import { defaultJobDescription, defaultResume } from "@/lib/defaults";
 import InterviewSession from "./components/InterviewSession";
+import personasData from "@/docs/personas.json";
 
-const personas: Persona[] = [
-  {
-    id: "tech_lead",
-    name: "Alex Chen",
-    role: "Senior Staff Engineer",
-    avatar: "👨‍💻",
-    description:
-      "Focuses on system design, edge cases, and technical depth. Hates buzzwords.",
-    defaultHarshness: 70,
-  },
-  {
-    id: "hr_manager",
-    name: "Sarah Jenkins",
-    role: "Head of People",
-    avatar: "👋",
-    description:
-      "Cares about STAR stories, culture fit, and clear communication. Very polite.",
-    defaultHarshness: 40,
-  },
-  {
-    id: "founder",
-    name: "Marcus Sterling",
-    role: "Founder & CEO",
-    avatar: "🚀",
-    description:
-      "Loves big ideas and energy. Penalizes low enthusiasm more than missed details.",
-    defaultHarshness: 20,
-  },
-];
+const personas: Persona[] = personasData as Persona[];
 
 export default function HomePage() {
   const defaultPersona = useMemo(() => personas[0], []);
