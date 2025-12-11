@@ -6,6 +6,7 @@ import InterviewSetup, { type Persona } from "./components/InterviewSetup";
 import { defaultJobDescription, defaultResume } from "@/lib/defaults";
 import InterviewSession from "./components/InterviewSession";
 import personasData from "@/docs/personas.json";
+import { Toaster } from "sonner";
 
 const personas: Persona[] = personasData as Persona[];
 
@@ -80,6 +81,7 @@ export default function HomePage() {
               confidence={confidence}
               jobDescription={jobDescription}
               resume={resume}
+              onConfidenceChange={setConfidence}
               onEnd={handleEnd}
             />
           )}
@@ -101,6 +103,7 @@ export default function HomePage() {
           </div>
         </SignedOut>
       </section>
+      <Toaster richColors position="top-right" />
     </main>
   );
 }

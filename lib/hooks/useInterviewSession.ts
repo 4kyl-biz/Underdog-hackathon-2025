@@ -1,13 +1,16 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useConversation, type Status } from "@11labs/react";
 import { generateSystemMessage } from "@/lib/prompt";
 import { type Persona } from "@/app/components/InterviewSetup";
+import { toast } from "sonner";
 
 type UseInterviewSessionArgs = {
   persona: Persona;
   harshness: number;
   jobDescription: string;
   resume: string;
+  confidence: number;
+  onConfidenceChange: (next: number) => void;
 };
 
 type UseInterviewSessionResult = {
@@ -21,6 +24,8 @@ export const useInterviewSession = ({
   harshness,
   jobDescription,
   resume,
+  confidence,
+  onConfidenceChange,
 }: UseInterviewSessionArgs): UseInterviewSessionResult => {
   const [error, setError] = useState<string | null>(null);
   const agentId = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ?? "";
@@ -28,6 +33,7 @@ export const useInterviewSession = ({
   const attemptRef = useRef(0);
   const contextRef = useRef<string>("");
   const agentIdRef = useRef<string>(agentId);
+  const confidenceRef = useRef<number>(confidence);
 
   const log = (...args: unknown[]) => {
     if (process.env.NODE_ENV !== "production") {
@@ -35,6 +41,12 @@ export const useInterviewSession = ({
       console.info("[interview-session]", ...args);
     }
   };
+
+  useEffect(() => {
+    confidenceRef.current = confidence;
+  }, [confidence]);
+
+  const clampConfidence = (value: number) => Math.max(0, Math.min(100, value));
 
   const {
     startSession,
@@ -44,6 +56,19 @@ export const useInterviewSession = ({
   } = useConversation({
     agentId,
     connectionType: "webrtc",
+    clientTools: {
+      rateAnswer: async ({ impact, reason }: { impact: number; reason: string }) => {
+        const next = clampConfidence(confidenceRef.current + impact);
+        confidenceRef.current = next;
+        onConfidenceChange(next);
+        log("rateAnswer", { impact, reason, next });
+        toast(`${reason}`, {
+          description: `Impact: ${impact > 0 ? "+" : ""}${impact}`,
+          duration: 3000,
+        });
+        return next;
+      },
+    },
     onStatusChange: ({ status: nextStatus }: { status: Status }) =>
       log("status", nextStatus),
     onConnect: ({ conversationId }: { conversationId: string }) =>

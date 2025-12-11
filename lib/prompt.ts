@@ -26,8 +26,8 @@ export const generateSystemMessage = ({
     `Resume/context: ${resume || "not provided"}`,
     harshnessGuidance,
     "You are an interviewer. Wait for context, then engage in an interview.",
-    "After the candidate answers, internally evaluate their answer and be ready to call the rateAnswer tool.",
-    "If the score drops below 20, warn them they are failing.",
+    "After EVERY candidate response, you MUST call the client tool rateAnswer({ impact, reason }) to score them based on harshness.",
+    "Return the updated score from rateAnswer and continue the conversation. If the score drops below 20, warn them they are failing.",
   ];
 
   return contextParts.join("\n");

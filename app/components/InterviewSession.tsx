@@ -9,6 +9,7 @@ type InterviewSessionProps = {
   confidence: number;
   jobDescription: string;
   resume: string;
+  onConfidenceChange: (value: number) => void;
   onEnd: () => void;
 };
 
@@ -31,6 +32,7 @@ export default function InterviewSession({
   confidence,
   jobDescription,
   resume,
+  onConfidenceChange,
   onEnd,
 }: InterviewSessionProps) {
   const { status, isSpeaking, error } = useInterviewSession({
@@ -38,6 +40,8 @@ export default function InterviewSession({
     harshness,
     jobDescription,
     resume,
+    confidence,
+    onConfidenceChange,
   });
 
   return (
