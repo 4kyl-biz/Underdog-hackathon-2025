@@ -3,23 +3,23 @@
 ## 🟣 Level 0: Authentication (Clerk) - *Partner Tech*
 *Goal: Secure the app and score partner points immediately.*
 
-- [ ] **Install Clerk**: `npm install @clerk/nextjs`
-- [ ] **Env Vars**: Get keys from Clerk Dashboard and add to `.env.local`:
+- [x] **Install Clerk**: `npm install @clerk/nextjs`
+- [x] **Env Vars**: Get keys from Clerk Dashboard and add to `.env.local`:
     - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
     - `CLERK_SECRET_KEY`
-- [ ] **Middleware**: Create `middleware.ts` in root to protect routes.
-- [ ] **Provider**: Wrap `<html />` (or the body content) with `<ClerkProvider>` in `app/layout.tsx`.
-- [ ] **UI Integration**:
-    - [ ] Add `<UserButton />` to the Header in `app/page.tsx`.
-    - [ ] Wrap the main content in `<SignedIn>` / `<SignedOut>` components (or let middleware handle redirection).
+- [x] **Middleware**: Create `middleware.ts` in root to protect routes.
+- [x] **Provider**: Wrap `<html />` (or the body content) with `<ClerkProvider>` in `app/layout.tsx`.
+- [x] **UI Integration**:
+    - [x] Add `<UserButton />` to the Header in `app/page.tsx`.
+    - [x] Wrap the main content in `<SignedIn>` / `<SignedOut>` components (or let middleware handle redirection).
 
 ## 🟢 Level 1: Foundation & UI (First 45 Mins)
 *Goal: Get the visuals up so it looks like a real app immediately.*
 
-- [ ] **Scaffold Project**: Run `npx create-next-app@latest` (TS, Tailwind, App Router).
-- [ ] **Install Deps**: `npm install @11labs/react lucide-react framer-motion clsx tailwind-merge @radix-ui/react-slider @radix-ui/react-progress sonner`
-- [ ] **Env Vars**: Add `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` (Use a generic placeholder agent ID for now).
-- [ ] **Layout Shell**: Clean up `page.tsx`. Add a dark mode theme wrapper (or just force dark classes).
+- [x] **Scaffold Project**: Run `npx create-next-app@latest` (TS, Tailwind, App Router).
+- [x] **Install Deps**: `npm install @11labs/react lucide-react framer-motion clsx tailwind-merge @radix-ui/react-slider @radix-ui/react-progress sonner`
+- [x] **Env Vars**: Add `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` (Use a generic placeholder agent ID for now).
+- [x] **Layout Shell**: Clean up `page.tsx`. Add a dark mode theme wrapper (or just force dark classes).
 - [ ] **Config Component (`InterviewSetup.tsx`)**:
     - [ ] Create "Persona Cards" (Clickable divs: Tech Lead, HR, Founder).
     - [ ] Create "Harshness Slider" (0-100 range).
