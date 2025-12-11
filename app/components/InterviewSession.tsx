@@ -1,8 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
 import * as Progress from "@radix-ui/react-progress";
-import { useConversation, type Status } from "@11labs/react";
 import { X } from "lucide-react";
-import { generateSystemMessage } from "@/lib/prompt";
+import { useInterviewSession } from "@/lib/hooks/useInterviewSession";
 import { type Persona } from "./InterviewSetup";
 
 type InterviewSessionProps = {
@@ -20,7 +18,7 @@ const progressClass = (value: number) => {
   return "bg-red-400";
 };
 
-const statusLabel: Record<Status, string> = {
+const statusLabel = {
   connecting: "Connecting...",
   connected: "Connected",
   disconnecting: "Disconnecting...",
@@ -35,47 +33,12 @@ export default function InterviewSession({
   resume,
   onEnd,
 }: InterviewSessionProps) {
-  const [error, setError] = useState<string | null>(null);
-  const systemMessage = useMemo(
-    () => generateSystemMessage({ persona, harshness, jobDescription, resume }),
-    [persona, harshness, jobDescription, resume],
-  );
-
-  const {
-    startSession,
-    endSession,
-    status,
-    isSpeaking,
-  } = useConversation({
-    agentId: process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ?? "",
-    connectionType: "websocket",
-    onError: (message) => setError(message),
+  const { status, isSpeaking, error } = useInterviewSession({
+    persona,
+    harshness,
+    jobDescription,
+    resume,
   });
-
-  useEffect(() => {
-    let active = true;
-    const run = async () => {
-      try {
-        await startSession({
-          overrides: {
-            agent: {
-              prompt: { prompt: systemMessage },
-              firstMessage: "Let's begin. I'll be scoring every answer in real time.",
-            },
-          },
-        });
-      } catch (error_: unknown) {
-        if (!active) return;
-        setError(error_ instanceof Error ? error_.message : "Failed to start session");
-      }
-    };
-    void run();
-
-    return () => {
-      active = false;
-      void endSession();
-    };
-  }, [startSession, endSession, systemMessage]);
 
   return (
     <div className="space-y-6">
