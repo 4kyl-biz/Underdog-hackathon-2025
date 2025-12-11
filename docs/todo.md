@@ -20,14 +20,14 @@
 - [x] **Install Deps**: `npm install @11labs/react lucide-react framer-motion clsx tailwind-merge @radix-ui/react-slider @radix-ui/react-progress sonner`
 - [x] **Env Vars**: Add `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` (Use a generic placeholder agent ID for now).
 - [x] **Layout Shell**: Clean up `page.tsx`. Add a dark mode theme wrapper (or just force dark classes).
-- [ ] **Config Component (`InterviewSetup.tsx`)**:
-    - [ ] Create "Persona Cards" (Clickable divs: Tech Lead, HR, Founder).
-    - [ ] Create "Harshness Slider" (0-100 range).
-    - [ ] Create Inputs: Job Description (Textarea), Resume (Textarea).
-    - [ ] Add a "Start Interview" button that switches the view state.
-- [ ] **Session Component (`InterviewSession.tsx`)**:
-    - [ ] Build the skeleton: An "End Button" and a placeholder for the Orb/Visualizer.
-    - [ ] Add the **Confidence Score UI** (A Shadcn Progress bar starting at 70%).
+- [x] **Config Component (`InterviewSetup.tsx`)**:
+    - [x] Create "Persona Cards" (Clickable divs: Tech Lead, HR, Founder).
+    - [x] Create "Harshness Slider" (0-100 range).
+    - [x] Create Inputs: Job Description (Textarea), Resume (Textarea).
+    - [x] Add a "Start Interview" button that switches the view state.
+- [x] **Session Component (`InterviewSession.tsx`)**:
+    - [x] Build the skeleton: An "End Button" and a placeholder for the Orb/Visualizer.
+    - [x] Add the **Confidence Score UI** (A Shadcn Progress bar starting at 70%).
 
 ## 🟡 Level 2: The Voice Connection (Next 45 Mins)
 *Goal: Make the Agent talk and listen.*
