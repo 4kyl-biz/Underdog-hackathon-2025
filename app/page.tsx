@@ -29,13 +29,13 @@ export default function HomePage() {
 
   return (
     <main className="flex flex-1 flex-col gap-8">
-      <header className="flex items-center justify-between rounded-2xl border border-slate-800/80 bg-slate-900/60 px-4 py-3 shadow-lg shadow-slate-950/30 backdrop-blur">
+      <header className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 shadow-lg shadow-slate-200/50 backdrop-blur">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-cyan-400 to-emerald-400 text-lg font-semibold text-slate-950 shadow-md shadow-cyan-500/40">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-cyan-400 to-emerald-400 text-lg font-semibold text-white shadow-md shadow-cyan-500/40">
             AI
           </div>
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-slate-300">
+            <p className="text-sm font-semibold uppercase tracking-wide text-slate-700">
               Mock Interviewer
             </p>
             <p className="text-xs text-slate-500">
@@ -55,7 +55,7 @@ export default function HomePage() {
         </SignedOut>
       </header>
 
-      <section className="grid gap-4 rounded-2xl border border-slate-800/80 bg-slate-900/50 p-6 shadow-xl shadow-slate-950/40 backdrop-blur">
+      <section className="grid gap-4 rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-xl shadow-slate-200/50 backdrop-blur">
         <SignedIn>
           {!inSession ? (
             <InterviewSetup
@@ -87,10 +87,10 @@ export default function HomePage() {
 
         <SignedOut>
           <div className="space-y-3">
-            <h1 className="text-2xl font-semibold text-white">
+            <h1 className="text-2xl font-semibold text-slate-900">
               Sign in to start your mock interview.
             </h1>
-            <p className="text-slate-400">
+            <p className="text-slate-600">
               Authentication is required for the real-time voice session and scoring.
             </p>
             <SignInButton mode="modal">
