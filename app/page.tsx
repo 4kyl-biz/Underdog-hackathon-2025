@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import InterviewSetup, { type Persona } from "./components/InterviewSetup";
+import { defaultJobDescription, defaultResume } from "@/lib/defaults";
 import InterviewSession from "./components/InterviewSession";
 
 const personas: Persona[] = [
@@ -39,8 +40,8 @@ export default function HomePage() {
   const defaultPersona = useMemo(() => personas[0], []);
   const [selectedPersona, setSelectedPersona] = useState<Persona>(defaultPersona);
   const [harshness, setHarshness] = useState<number>(defaultPersona.defaultHarshness);
-  const [jobDescription, setJobDescription] = useState<string>("");
-  const [resume, setResume] = useState<string>("");
+  const [jobDescription, setJobDescription] = useState<string>(defaultJobDescription);
+  const [resume, setResume] = useState<string>(defaultResume);
   const [inSession, setInSession] = useState<boolean>(false);
   const [confidence, setConfidence] = useState<number>(70);
 
