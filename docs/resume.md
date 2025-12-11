@@ -1,0 +1,1 @@
+Senior frontend Engineer with 7+ years experience in React, React Native, TypeScript and Next.js. Delivered major features across web and mobile, improving performance, reliability and user experience. Led upgrades, built secure flows, integrated APIs, improved CI/CD and testing, and shipped high-impact products including mobile app and pension payment features.
