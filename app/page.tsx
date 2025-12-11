@@ -64,7 +64,7 @@ export default function HomePage() {
     <main className="flex flex-1 flex-col gap-8">
       <header className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 shadow-lg shadow-slate-200/50 backdrop-blur">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-cyan-400 to-emerald-400 text-lg font-semibold text-white shadow-md shadow-cyan-500/40">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500 text-lg font-semibold text-white shadow-md">
             AI
           </div>
           <div>

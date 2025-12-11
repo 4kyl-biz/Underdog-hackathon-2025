@@ -38,7 +38,7 @@ export default function InterviewSetup({
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold text-slate-900">Configure your interviewer</h1>
+        <h1 className="text-2xl font-semibold text-slate-900">Pick your interviewer</h1>
         <p className="text-sm text-slate-600">
           Choose a persona, set harshness, and provide context before starting.
         </p>
@@ -56,7 +56,7 @@ export default function InterviewSetup({
                 type="button"
                 onClick={() => onSelectPersona(persona)}
                 className={clsx(
-                  "flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-indigo-100 via-cyan-50 to-emerald-50 shadow-sm transition hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2",
+                  "flex h-24 w-24 items-center justify-center rounded-full bg-slate-100 shadow-sm transition hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2",
                   isSelected && "ring-2 ring-indigo-500 ring-offset-2",
                 )}
               >
@@ -151,13 +151,13 @@ export default function InterviewSetup({
         <div>
           <p className="text-sm font-semibold text-slate-900">Ready to start?</p>
           <p className="text-xs text-slate-600">
-            Score initializes at 70. You can end the session anytime.
+            Score initializes at 50. You can end the session anytime.
           </p>
         </div>
         <button
           type="button"
           onClick={onStart}
-          className="w-full rounded-lg bg-gradient-to-r from-indigo-500 via-cyan-500 to-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-md shadow-indigo-500/30 transition hover:opacity-95 sm:w-auto"
+          className="w-full rounded-lg bg-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-indigo-600 sm:w-auto"
         >
           Start Interview
         </button>
