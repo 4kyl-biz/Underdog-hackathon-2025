@@ -1,19 +1,18 @@
-# Project Specs: AI Mock Interviewer (Hackathon Final)
+# Project Specs: AI Mock Interviewer (Hackathon Final + Clerk)
 
 ## 1. Project Overview
-
 A real-time voice interviewer with **Dynamic Confidence Scoring**. The AI judges the candidate's answers in real-time and updates a visual score on the screen using Function Calling. Includes Persona selection and Harshness settings.
+**Partner Tech:** Includes **Clerk** for secure user authentication.
 
 ## 2. Tech Stack
-
 - **Framework:** Next.js 14, Tailwind, Shadcn/ui
 - **Voice:** ElevenLabs React SDK (`@11labs/react`)
+- **Auth:** Clerk (`@clerk/nextjs`) - **Partner Tech Integration**
 - **Key Feature:** Client-side Function Calling (`clientTools`)
 
 ## 3. Core Logic: The Confidence System
 
 ### UI Component: `LiveScoreBoard`
-
 - **Visual:** A large Progress Bar or Gauge.
 - **Color Logic:**
   - 80-100: Green (Hired)
@@ -22,7 +21,6 @@ A real-time voice interviewer with **Dynamic Confidence Scoring**. The AI judges
 - **Animation:** Smooth transition when score updates.
 
 ### Agent Logic (Function Calling)
-
 - **Tool Name:** `rateAnswer`
 - **Trigger:** The Agent must call this tool **after every user response**.
 - **Parameters:**
@@ -35,19 +33,19 @@ A real-time voice interviewer with **Dynamic Confidence Scoring**. The AI judges
   > If the score drops below 20, warn them they are failing."
 
 ## 4. Interaction Flow
-
-1. **Config:** User selects "Elon (Founder)" + Harshness 90%.
-2. **Start:** Score initializes at 70.
-3. **Q1:** "Tell me about a mistake you made."
-4. **A1:** User stammers, gives a bad answer.
-5. **Action:**
+1. **Onboarding (Clerk):** User lands on page -> Redirected to Sign In -> Returns to Dashboard.
+2. **Config:** User selects "Elon (Founder)" + Harshness 90%.
+3. **Start:** Score initializes at 70.
+4. **Q1:** "Tell me about a mistake you made."
+5. **A1:** User stammers, gives a bad answer.
+6. **Action:**
    - Agent thinks: "Terrible answer."
    - Agent calls: `rateAnswer({ impact: -15, reason: "Lacked accountability" })`
    - UI: Score drops to 55 (Yellow). Toast notification shows "Lacked accountability".
    - Audio: Agent says "That sounds like you're blaming others. Next question..."
 
 ## 5. Implementation Plan (Prioritized)
-
-1. **State:** Add `confidence` state (0-100).
-2. **SDK Config:** Define `clientTools` in `useConversation`.
-3. **Prompt:** Update the dynamic prompt builder to enforce tool usage.
+1. **Auth:** Wrap app in `<ClerkProvider>`, add middleware.
+2. **State:** Add `confidence` state (0-100).
+3. **SDK Config:** Define `clientTools` in `useConversation`.
+4. **Prompt:** Update the dynamic prompt builder to enforce tool usage.

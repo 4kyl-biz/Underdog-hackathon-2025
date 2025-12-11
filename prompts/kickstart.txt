@@ -1,0 +1,1 @@
+read the specs.md and todo.md, start the current phase of the project. Manual review is required
