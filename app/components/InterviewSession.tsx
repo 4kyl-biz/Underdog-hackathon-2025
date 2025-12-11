@@ -1,11 +1,16 @@
+import { useEffect, useMemo, useState } from "react";
 import * as Progress from "@radix-ui/react-progress";
+import { useConversation, type Status } from "@11labs/react";
 import { X } from "lucide-react";
+import { generateSystemMessage } from "@/lib/prompt";
 import { type Persona } from "./InterviewSetup";
 
 type InterviewSessionProps = {
   persona: Persona;
   harshness: number;
   confidence: number;
+  jobDescription: string;
+  resume: string;
   onEnd: () => void;
 };
 
@@ -15,12 +20,63 @@ const progressClass = (value: number) => {
   return "bg-red-400";
 };
 
+const statusLabel: Record<Status, string> = {
+  connecting: "Connecting...",
+  connected: "Connected",
+  disconnecting: "Disconnecting...",
+  disconnected: "Disconnected",
+};
+
 export default function InterviewSession({
   persona,
   harshness,
   confidence,
+  jobDescription,
+  resume,
   onEnd,
 }: InterviewSessionProps) {
+  const [error, setError] = useState<string | null>(null);
+  const systemMessage = useMemo(
+    () => generateSystemMessage({ persona, harshness, jobDescription, resume }),
+    [persona, harshness, jobDescription, resume],
+  );
+
+  const {
+    startSession,
+    endSession,
+    status,
+    isSpeaking,
+  } = useConversation({
+    agentId: process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ?? "",
+    connectionType: "websocket",
+    onError: (message) => setError(message),
+  });
+
+  useEffect(() => {
+    let active = true;
+    const run = async () => {
+      try {
+        await startSession({
+          overrides: {
+            agent: {
+              prompt: { prompt: systemMessage },
+              firstMessage: "Let's begin. I'll be scoring every answer in real time.",
+            },
+          },
+        });
+      } catch (error_: unknown) {
+        if (!active) return;
+        setError(error_ instanceof Error ? error_.message : "Failed to start session");
+      }
+    };
+    void run();
+
+    return () => {
+      active = false;
+      void endSession();
+    };
+  }, [startSession, endSession, systemMessage]);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between rounded-2xl border border-slate-800/80 bg-slate-900/60 p-4">
@@ -32,6 +88,9 @@ export default function InterviewSession({
             <p className="text-sm font-semibold text-white">{persona.name}</p>
             <p className="text-xs text-slate-400">
               {persona.role} · Harshness {harshness}%
+            </p>
+            <p className="text-[11px] font-semibold text-slate-400">
+              {statusLabel[status]} {isSpeaking ? "· Agent speaking" : "· Listening"}
             </p>
           </div>
         </div>
@@ -61,11 +120,19 @@ export default function InterviewSession({
         </p>
       </div>
 
+      {error && (
+        <div className="rounded-xl border border-red-500/40 bg-red-500/10 p-3 text-sm text-red-100">
+          {error}
+        </div>
+      )}
+
       <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-slate-800/80 bg-slate-900/40 p-6 text-center">
         <div className="h-20 w-20 rounded-full bg-gradient-to-br from-indigo-500/50 via-cyan-400/40 to-emerald-400/40 blur-3xl" />
-        <p className="text-sm font-semibold text-white">Voice session placeholder</p>
+        <p className="text-sm font-semibold text-white">
+          Voice session connected to ElevenLabs agent.
+        </p>
         <p className="text-xs text-slate-400">
-          Orb/visualizer will appear here once ElevenLabs is connected.
+          Orb/visualizer placeholder. Speaking indicator shows above.
         </p>
       </div>
     </div>

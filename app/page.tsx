@@ -104,6 +104,8 @@ export default function HomePage() {
               persona={selectedPersona}
               harshness={harshness}
               confidence={confidence}
+              jobDescription={jobDescription}
+              resume={resume}
               onEnd={handleEnd}
             />
           )}
