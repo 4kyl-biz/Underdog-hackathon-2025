@@ -64,9 +64,8 @@ export default function InterviewSetup({
                   {persona.name.split(" ")[0]}
                 </span>
               </button>
-              <div className="space-y-1">
-                <p className="text-sm font-semibold text-slate-900">{persona.name}</p>
-                <p className="text-xs text-slate-600">{persona.role}</p>
+              <div>
+                <p className="text-base font-semibold text-slate-900">{persona.role}</p>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">{persona.description}</p>
               <p className="text-[11px] font-semibold text-indigo-600">
