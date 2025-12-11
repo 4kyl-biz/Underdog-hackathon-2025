@@ -47,17 +47,17 @@
 ## 🔴 Level 3: The "Magic" (Complex Logic) (Next 60 Mins)
 *Goal: Implement Function Calling and the Dynamic Score.*
 
-- [ ] **Define Client Tool**:
-    - [ ] Inside `useConversation` config, add `clientTools`.
-    - [ ] Create `rateAnswer({ impact, reason })`.
-- [ ] **Connect Tool to State**:
-    - [ ] Inside `rateAnswer`, update the `confidence` state (`setConfidence(prev => prev + impact)`).
-    - [ ] Trigger a Toast notification (`sonner`) showing the `reason` (e.g., "Too vague (-10)").
-- [ ] **Force Tool Usage (Prompt Engineering)**:
-    - [ ] Update your `generateSystemMessage` function.
-    - [ ] Add explicit instruction: *"After EVERY user response, you MUST call the `rateAnswer` tool to evaluate them based on the harshness setting."*
-- [ ] **Feedback Loop**:
-    - [ ] Make the `rateAnswer` tool return the *new* score to the Agent.
+- [x] **Define Client Tool**:
+    - [x] Inside `useConversation` config, add `clientTools`.
+    - [x] Create `rateAnswer({ impact, reason })`.
+- [x] **Connect Tool to State**:
+    - [x] Inside `rateAnswer`, update the `confidence` state (`setConfidence(prev => prev + impact)`).
+    - [x] Trigger a Toast notification (`sonner`) showing the `reason` (e.g., "Too vague (-10)").
+- [x] **Force Tool Usage (Prompt Engineering)**:
+    - [x] Update your `generateSystemMessage` function.
+    - [x] Add explicit instruction: *"After EVERY user response, you MUST call the `rateAnswer` tool to evaluate them based on the harshness setting."*
+- [x] **Feedback Loop**:
+    - [x] Make the `rateAnswer` tool return the *new* score to the Agent.
     - [ ] (Optional) Instruct Agent to comment on the score if it drops too low.
 
 ## 🔵 Level 4: Polish & Demo Prep (Final 30 Mins)
