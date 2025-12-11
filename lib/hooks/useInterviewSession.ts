@@ -26,7 +26,7 @@ export const useInterviewSession = ({
   const agentId = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ?? "";
   const startedRef = useRef(false);
   const attemptRef = useRef(0);
-  const contextRef = useRef<string | null>(null);
+  const contextRef = useRef<string>("");
   const agentIdRef = useRef<string>(agentId);
 
   const log = (...args: unknown[]) => {
@@ -86,11 +86,13 @@ export const useInterviewSession = ({
           contextCached: Boolean(contextRef.current),
         });
 
+        const promptText = contextRef.current || generateSystemMessage({ persona, harshness, jobDescription, resume });
+
         await startSession({
           agentId: resolvedAgentId,
           overrides: {
             agent: {
-              prompt: { prompt: contextRef.current },
+              prompt: { prompt: promptText },
               firstMessage: "Let's begin. I'll be scoring every answer in real time.",
             },
           },
