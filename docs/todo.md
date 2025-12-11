@@ -36,13 +36,13 @@
     - [ ] Go to ElevenLabs Dashboard -> Create Agent.
     - [ ] **System Prompt**: Set a generic fallback: *"You are an interviewer. Wait for context."*
     - [ ] **Security**: whitelist `localhost` domain in the agent settings.
-- [ ] **Hook Implementation**:
-    - [ ] In `InterviewSession.tsx`, import `useConversation` from `@11labs/react`.
-    - [ ] Connect the "Start" button (or `useEffect`) to `conversation.startSession()`.
-    - [ ] Bind `conversation.isSpeaking` state to a simple visual indicator (e.g., text saying "Agent Speaking...").
-- [ ] **Prompt Builder Logic**:
-    - [ ] Write a function `generateSystemMessage(persona, harshness, jobData)` that returns a string.
-    - [ ] **Crucial**: Pass this string as the first message or context override when starting the session.
+- [x] **Hook Implementation**:
+    - [x] In `InterviewSession.tsx`, import `useConversation` from `@11labs/react`.
+    - [x] Connect the "Start" button (or `useEffect`) to `conversation.startSession()`.
+    - [x] Bind `conversation.isSpeaking` state to a simple visual indicator (e.g., text saying "Agent Speaking...").
+- [x] **Prompt Builder Logic**:
+    - [x] Write a function `generateSystemMessage(persona, harshness, jobData)` that returns a string.
+    - [x] **Crucial**: Pass this string as the first message or context override when starting the session.
 
 ## 🔴 Level 3: The "Magic" (Complex Logic) (Next 60 Mins)
 *Goal: Implement Function Calling and the Dynamic Score.*
