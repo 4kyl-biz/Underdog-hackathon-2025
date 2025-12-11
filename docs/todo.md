@@ -60,7 +60,15 @@
     - [x] Make the `rateAnswer` tool return the *new* score to the Agent.
     - [ ] (Optional) Instruct Agent to comment on the score if it drops too low.
 
-## 🔵 Level 4: Polish & Demo Prep (Final 30 Mins)
+## 🟠 Level 4: Summary & Review
+*Goal: Let the user review the interview.*
+
+- [ ] **Summary Page**: After ending the interview, show a summary view with transcripts and comments.
+- [ ] **Transcript List**: Display ordered Q/A transcript snippets from the session.
+- [ ] **Comments/Feedback**: Surface agent comments/reasons (from rateAnswer) alongside the transcript.
+- [ ] **Score Recap**: Show final confidence score and notable drops/reasons.
+
+## 🔵 Level 5: Polish & Demo Prep (Final 30 Mins)
 *Goal: Make it demo-ready.*
 
 - [ ] **Persona Visuals**: Show the Avatar of the selected Persona in the active session view.
